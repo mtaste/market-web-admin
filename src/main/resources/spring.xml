@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 官方注释：扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类。 测试发现：此处package不填写包名会无法注册Service，扫描全包需填写包首即可或者填写至类的上一级目录。 -->
+	<dubbo:annotation package="com" />
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="market-web-admin" owner="MarketAPIWeb" />
+
+	<!-- 使用zookeeper广播注册中心暴露服务地址 -->
+	<dubbo:registry address="zookeeper://192.168.1.247:2181"
+		client="zkclient" />
+	<dubbo:monitor protocol="registry" />
+</beans>
