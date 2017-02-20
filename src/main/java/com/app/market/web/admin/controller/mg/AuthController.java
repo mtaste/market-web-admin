@@ -18,8 +18,6 @@ import com.app.market.support.util.Version;
 @Controller
 @RequestMapping("/api/auth")
 public class AuthController {
-	@Reference(version = Version.NOW)
-	private AuthService authService;
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 	/**
@@ -35,8 +33,7 @@ public class AuthController {
 		logger.info("api.auth.user");
 		Result ret = new Result();
 		UserInfoDTO p = JsonUtil.parse(param, UserInfoDTO.class);
-		String token = this.authService.authUser(p);
-		ret.setData(token);
+		ret.setData("");
 		return ret;
 	}
 

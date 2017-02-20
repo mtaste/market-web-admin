@@ -46,14 +46,14 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	<mvc:resources mapping="/admin/**" location="/admin/" />
+	<mvc:resources mapping="/dist/**" location="/dist/" />
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean id="AuthInterceptor" class="com.app.market.filter.AuthInterceptor">
 				<property name="IGNORE_URI">
 					<list>
-						<value>/user/login.do</value>
+						<value>/user/login.json</value>
 						<value>/api/auth/user.do</value>
 					</list>
 				</property>
