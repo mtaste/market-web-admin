@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.app.market.dto.sys.SysAuthDTO;
 import com.app.market.dto.user.UserInfoDTO;
 import com.app.market.service.user.AuthService;
 import com.app.market.support.dto.Result;
@@ -25,6 +26,25 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Reference(version = Version.NOW)
 	private AuthService authService;
+
+	/**
+	 * 获取菜单功能
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/auth/funcs")
+	@ResponseBody
+	public Object authFuncs(String param, HttpServletRequest request) {
+		logger.info("user");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		SysAuthDTO p = JsonUtil.parse(param, SysAuthDTO.class);
+		List<Map<String, String>> r = this.authService.getUserMenuFuncs(userId, p);
+		ret.setData(r);
+		return ret;
+	}
 
 	/**
 	 * 获取菜单
