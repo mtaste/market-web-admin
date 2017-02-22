@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.app.market.dto.sys.SysAuthDTO;
+import com.app.market.service.common.CrudService;
 import com.app.market.service.user.AuthService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
@@ -24,6 +25,8 @@ public class AuthController {
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	@Reference(version = Version.NOW)
 	private AuthService authService;
+	@Reference(version = Version.NOW)
+	private CrudService crudService;
 
 	/**
 	 * 权限定义列表

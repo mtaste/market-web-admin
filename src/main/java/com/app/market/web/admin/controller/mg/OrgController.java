@@ -1,5 +1,6 @@
 package com.app.market.web.admin.controller.mg;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.app.market.dto.common.PageBean;
 import com.app.market.dto.common.PageDTO;
+import com.app.market.dto.sys.SysOrgAuthDTO;
 import com.app.market.dto.sys.SysOrgDTO;
 import com.app.market.service.sys.OrgService;
 import com.app.market.support.dto.Result;
@@ -80,4 +82,39 @@ public class OrgController {
 		return ret;
 	}
 
+	/**
+	 * 获取机构权限信息
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/auth")
+	@ResponseBody
+	public Object auth(String param, HttpServletRequest request) {
+		logger.info("org.list");
+		Result ret = new Result();
+		SysOrgAuthDTO p = JsonUtil.parse(param, SysOrgAuthDTO.class);
+		List<Map<String, String>> r = this.orgService.getOrgAuthList(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 获取机构权限信息
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/auth/save")
+	@ResponseBody
+	public Object authSave(String param, HttpServletRequest request) {
+		logger.info("org.list");
+		Result ret = new Result();
+		SysOrgAuthDTO p = JsonUtil.parse(param, SysOrgAuthDTO.class);
+		String r = this.orgService.saveOrgAuth(p);
+		ret.setData(r);
+		return ret;
+	}
 }
