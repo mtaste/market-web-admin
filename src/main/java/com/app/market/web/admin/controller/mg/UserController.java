@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.app.market.dto.common.PageBean;
+import com.app.market.dto.common.PageDTO;
 import com.app.market.dto.sys.SysAuthDTO;
-import com.app.market.dto.user.UserInfoDTO;
+import com.app.market.dto.user.SysUserDTO;
 import com.app.market.service.user.AuthService;
+import com.app.market.service.user.UserService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
 import com.app.market.support.util.Request;
@@ -26,6 +29,8 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Reference(version = Version.NOW)
 	private AuthService authService;
+	@Reference(version = Version.NOW)
+	private UserService userService;
 
 	/**
 	 * 获取菜单功能
@@ -77,9 +82,70 @@ public class UserController {
 	public Object login(String param, HttpServletRequest request) {
 		logger.info("user");
 		Result ret = new Result();
-		UserInfoDTO p = JsonUtil.parse(param, UserInfoDTO.class);
+		SysUserDTO p = JsonUtil.parse(param, SysUserDTO.class);
 		String token = this.authService.authUser(p);
 		ret.setData(token);
+		return ret;
+	}
+
+	/**
+	 * 获取菜单功能
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/list")
+	@ResponseBody
+	public Object list(String param, HttpServletRequest request) {
+		logger.info("org.list");
+		Result ret = new Result();
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		SysUserDTO p = JsonUtil.parse(param, SysUserDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUserId(userId);
+		PageBean<Map<String, String>> r = this.userService.getUserList(p, page);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 保存定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("save")
+	@ResponseBody
+	public Object Save(String param, HttpServletRequest request) {
+		logger.info("org.save");
+		Result ret = new Result();
+		SysUserDTO p = JsonUtil.parse(param, SysUserDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUserId(userId);
+		String r = this.userService.saveUserData(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 删除定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("remove")
+	@ResponseBody
+	public Object remove(String param, HttpServletRequest request) {
+		logger.info("org.remove");
+		Result ret = new Result();
+		SysUserDTO p = JsonUtil.parse(param, SysUserDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUserId(userId);
+		String r = this.userService.removeUserData(p);
+		ret.setData(r);
 		return ret;
 	}
 }

@@ -39,7 +39,7 @@ public class OrgDeptController {
 	@RequestMapping("/list")
 	@ResponseBody
 	public Object list(String param, HttpServletRequest request) {
-		logger.info("org.list");
+		logger.info("org.dept.list");
 		Result ret = new Result();
 		String userId = Request.getUserId(request);
 		List<Map<String, String>> r = this.orgService.getDeptList(userId);
@@ -57,7 +57,7 @@ public class OrgDeptController {
 	@RequestMapping("save")
 	@ResponseBody
 	public Object save(String param, HttpServletRequest request) {
-		logger.info("org.save");
+		logger.info("org.dept.save");
 		Result ret = new Result();
 		SysDeptDTO p = JsonUtil.parse(param, SysDeptDTO.class);
 		String userId = Request.getUserId(request);
@@ -76,7 +76,7 @@ public class OrgDeptController {
 	@RequestMapping("remove")
 	@ResponseBody
 	public Object remove(String param, HttpServletRequest request) {
-		logger.info("org.remove");
+		logger.info("org.dept.remove");
 		Result ret = new Result();
 		SysDeptDTO p = JsonUtil.parse(param, SysDeptDTO.class);
 		String r = this.orgService.removeDeptData(p);
@@ -94,7 +94,7 @@ public class OrgDeptController {
 	@RequestMapping("role/list")
 	@ResponseBody
 	public Object roleList(String param, HttpServletRequest request) {
-		logger.info("org.list");
+		logger.info("org.dept.role.list");
 		Result ret = new Result();
 		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
 		PageDTO page = JsonUtil.parse(param, PageDTO.class);
@@ -113,7 +113,7 @@ public class OrgDeptController {
 	@RequestMapping("role/save")
 	@ResponseBody
 	public Object roleSave(String param, HttpServletRequest request) {
-		logger.info("org.save");
+		logger.info("org.dept.role.save");
 		Result ret = new Result();
 		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
 		String userId = Request.getUserId(request);
@@ -132,11 +132,48 @@ public class OrgDeptController {
 	@RequestMapping("role/remove")
 	@ResponseBody
 	public Object roleRemove(String param, HttpServletRequest request) {
-		logger.info("org.remove");
+		logger.info("org.dept.role.remove");
 		Result ret = new Result();
 		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
 		String userId = Request.getUserId(request);
 		String r = this.orgService.removeDeptRoleData(p, userId);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 权限定义列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("auth/list")
+	@ResponseBody
+	public Object orgAuthList(String param, HttpServletRequest request) {
+		logger.info("org.dept.auth.list");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		List<Map<String, String>> r = this.orgService.getOrgAllAuth(userId);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 权限定义列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("role/auth/list")
+	@ResponseBody
+	public Object roleAuthList(String param, HttpServletRequest request) {
+		logger.info("org.dept.role.auth.list");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
+		List<Map<String, String>> r = this.orgService.getRoleAuthList(userId, p.getId());
 		ret.setData(r);
 		return ret;
 	}
