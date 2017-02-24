@@ -16,6 +16,7 @@ import com.app.market.dto.common.PageBean;
 import com.app.market.dto.common.PageDTO;
 import com.app.market.dto.sys.SysDeptDTO;
 import com.app.market.dto.sys.SysRoleDTO;
+import com.app.market.dto.sys.SysUserRoleDTO;
 import com.app.market.service.sys.OrgService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
@@ -85,7 +86,7 @@ public class OrgDeptController {
 	}
 
 	/**
-	 * 获取菜单功能
+	 * 获取部门职务
 	 * 
 	 * @param param
 	 * @param request
@@ -174,6 +175,105 @@ public class OrgDeptController {
 		String userId = Request.getUserId(request);
 		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
 		List<Map<String, String>> r = this.orgService.getRoleAuthList(userId, p.getId());
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 获取部门用户列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("user/list")
+	@ResponseBody
+	public Object userList(String param, HttpServletRequest request) {
+		logger.info("org.dept.role.user.list");
+		Result ret = new Result();
+		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUserId(userId);
+		PageBean<Map<String, String>> r = this.orgService.getDeptUserList(page, p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 获取职务可选择用户
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("role/user/select")
+	@ResponseBody
+	public Object roleUserSelect(String param, HttpServletRequest request) {
+		logger.info("org.dept.role.user.select");
+		Result ret = new Result();
+		SysUserRoleDTO p = JsonUtil.parse(param, SysUserRoleDTO.class);
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUserId(userId);
+		PageBean<Map<String, String>> r = this.orgService.getRoleUserSelect(page, p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 获取职务用户列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("role/user/list")
+	@ResponseBody
+	public Object roleUserList(String param, HttpServletRequest request) {
+		logger.info("org.dept.role.user.list");
+		Result ret = new Result();
+		SysUserRoleDTO p = JsonUtil.parse(param, SysUserRoleDTO.class);
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		PageBean<Map<String, String>> r = this.orgService.getRoleUserList(page, p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 保存定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("role/user/save")
+	@ResponseBody
+	public Object roleUserSave(String param, HttpServletRequest request) {
+		logger.info("org.dept.role.user.save");
+		Result ret = new Result();
+		SysUserRoleDTO p = JsonUtil.parse(param, SysUserRoleDTO.class);
+		String userId = Request.getUserId(request);
+		String r = this.orgService.saveRoleUserData(p, userId);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 删除定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("role/user/remove")
+	@ResponseBody
+	public Object roleUserRemove(String param, HttpServletRequest request) {
+		logger.info("org.dept.role.user.remove");
+		Result ret = new Result();
+		SysUserRoleDTO p = JsonUtil.parse(param, SysUserRoleDTO.class);
+		String userId = Request.getUserId(request);
+		String r = this.orgService.removeDeptRoleData(p, userId);
 		ret.setData(r);
 		return ret;
 	}
