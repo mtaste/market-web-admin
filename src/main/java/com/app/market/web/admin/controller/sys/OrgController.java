@@ -1,4 +1,4 @@
-package com.app.market.web.admin.controller.mg;
+package com.app.market.web.admin.controller.sys;
 
 import java.util.List;
 import java.util.Map;
@@ -20,11 +20,12 @@ import com.app.market.service.sys.OrgService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
 import com.app.market.support.util.Version;
+import com.app.market.web.admin.controller.mg.MgOrgController;
 
 @Controller
-@RequestMapping("/org")
+@RequestMapping("/mg/org")
 public class OrgController {
-	private static final Logger logger = LoggerFactory.getLogger(OrgController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MgOrgController.class);
 	@Reference(version = Version.NOW)
 	private OrgService orgService;
 

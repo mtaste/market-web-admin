@@ -1,4 +1,4 @@
-package com.app.market.web.admin.controller.mg;
+package com.app.market.web.admin.controller.sys;
 
 import java.util.List;
 import java.util.Map;
