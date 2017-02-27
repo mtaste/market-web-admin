@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.app.market.dto.sys.SysApprovalListDTO;
 import com.app.market.dto.sys.SysAuthDTO;
 import com.app.market.service.common.CrudService;
 import com.app.market.service.user.AuthService;
@@ -81,4 +82,21 @@ public class AuthController {
 		return ret;
 	}
 
+	/**
+	 * 权限定义列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("bill/list")
+	@ResponseBody
+	public Object billList(String param, HttpServletRequest request) {
+		logger.info("auth.bill.list");
+		Result ret = new Result();
+		SysApprovalListDTO p = JsonUtil.parse(param, SysApprovalListDTO.class);
+		List<Map<String, String>> r = this.authService.getBillAuthList(p);
+		ret.setData(r);
+		return ret;
+	}
 }

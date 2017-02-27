@@ -23,7 +23,7 @@ import com.app.market.support.util.Version;
 import com.app.market.web.admin.controller.mg.MgOrgController;
 
 @Controller
-@RequestMapping("/mg/org")
+@RequestMapping("/org")
 public class OrgController {
 	private static final Logger logger = LoggerFactory.getLogger(MgOrgController.class);
 	@Reference(version = Version.NOW)

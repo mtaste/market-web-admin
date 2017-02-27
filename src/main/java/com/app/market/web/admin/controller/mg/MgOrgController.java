@@ -17,6 +17,7 @@ import com.app.market.dto.mg.MgOrgRegisterDTO;
 import com.app.market.service.mg.MgOrgService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
+import com.app.market.support.util.Request;
 import com.app.market.support.util.Version;
 
 @Controller
@@ -58,7 +59,69 @@ public class MgOrgController {
 		logger.info("org.save");
 		Result ret = new Result();
 		MgOrgRegisterDTO p = JsonUtil.parse(param, MgOrgRegisterDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
 		String r = this.mgOrgService.saveOrgData(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 保存定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("register/app")
+	@ResponseBody
+	public Object registerApp(String param, HttpServletRequest request) {
+		logger.info("org.app");
+		Result ret = new Result();
+		MgOrgRegisterDTO p = JsonUtil.parse(param, MgOrgRegisterDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		String r = this.mgOrgService.appRegisterData(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 审核功能
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("register/auth")
+	@ResponseBody
+	public Object registerAuth(String param, HttpServletRequest request) {
+		logger.info("org.auth");
+		Result ret = new Result();
+		MgOrgRegisterDTO p = JsonUtil.parse(param, MgOrgRegisterDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		String r = this.mgOrgService.authRegisterData(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 否决功能
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("register/reject")
+	@ResponseBody
+	public Object registerReject(String param, HttpServletRequest request) {
+		logger.info("org.auth");
+		Result ret = new Result();
+		MgOrgRegisterDTO p = JsonUtil.parse(param, MgOrgRegisterDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		String r = this.mgOrgService.rejectRegisterData(p);
 		ret.setData(r);
 		return ret;
 	}
