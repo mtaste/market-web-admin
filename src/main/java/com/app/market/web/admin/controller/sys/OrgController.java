@@ -42,7 +42,8 @@ public class OrgController {
 		logger.info("org.list");
 		Result ret = new Result();
 		PageDTO page = JsonUtil.parse(param, PageDTO.class);
-		PageBean<Map<String, String>> r = this.orgService.getOrgList(page);
+		SysOrgDTO p = JsonUtil.parse(param, SysOrgDTO.class);
+		PageBean<Map<String, String>> r = this.orgService.getOrgList(page, p);
 		ret.setData(r);
 		return ret;
 	}
