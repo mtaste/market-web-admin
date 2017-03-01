@@ -19,6 +19,7 @@ import com.app.market.dto.sys.SysOrgDTO;
 import com.app.market.service.sys.OrgService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
+import com.app.market.support.util.Request;
 import com.app.market.support.util.Version;
 import com.app.market.web.admin.controller.mg.MgOrgController;
 
@@ -28,6 +29,24 @@ public class OrgController {
 	private static final Logger logger = LoggerFactory.getLogger(MgOrgController.class);
 	@Reference(version = Version.NOW)
 	private OrgService orgService;
+
+	/**
+	 * 获取当前公司信息
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/info")
+	@ResponseBody
+	public Object info(String param, HttpServletRequest request) {
+		logger.info("org.info");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		Map<String, String> r = this.orgService.getOrgInfo(userId);
+		ret.setData(r);
+		return ret;
+	}
 
 	/**
 	 * 获取菜单功能
