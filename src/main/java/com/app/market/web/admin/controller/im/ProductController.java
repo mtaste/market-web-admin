@@ -15,6 +15,7 @@ import com.app.market.dto.common.PageBean;
 import com.app.market.dto.common.PageDTO;
 import com.app.market.dto.im.ImProductInfoDTO;
 import com.app.market.dto.im.ImProductChangeDTO;
+import com.app.market.dto.im.ImProductChangeDetailDTO;
 import com.app.market.service.im.ProductService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
@@ -187,4 +188,103 @@ public class ProductController {
 		return ret;
 	}
 
+	/**
+	 * 获取产品明细列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("change/productList")
+	@ResponseBody
+	public Object changeProductList(String param, HttpServletRequest request) {
+		logger.info("org.list");
+		Result ret = new Result();
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		ImProductChangeDTO p = JsonUtil.parse(param, ImProductChangeDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		PageBean<Map<String, String>> r = this.productService.getChangeProductList(page, p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 获取产品明细列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("change/detail")
+	@ResponseBody
+	public Object changeDetail(String param, HttpServletRequest request) {
+		logger.info("org.list");
+		Result ret = new Result();
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		ImProductChangeDTO p = JsonUtil.parse(param, ImProductChangeDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		PageBean<Map<String, String>> r = this.productService.changeDetail(page, p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 删除定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("change/removeDetail")
+	@ResponseBody
+	public Object changeRemoveDetail(String param, HttpServletRequest request) {
+		logger.info("org.remove");
+		Result ret = new Result();
+		ImProductChangeDTO p = JsonUtil.parse(param, ImProductChangeDTO.class);
+		String r = this.productService.removeChangeDetail(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 删除定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("change/addDetail")
+	@ResponseBody
+	public Object changeAddDetail(String param, HttpServletRequest request) {
+		logger.info("org.remove");
+		Result ret = new Result();
+		ImProductChangeDTO p = JsonUtil.parse(param, ImProductChangeDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		String r = this.productService.addChangeDetail(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 删除定义
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("change/detailQty")
+	@ResponseBody
+	public Object changeDetailQty(String param, HttpServletRequest request) {
+		logger.info("org.remove");
+		Result ret = new Result();
+		ImProductChangeDetailDTO p = JsonUtil.parse(param, ImProductChangeDetailDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		String r = this.productService.addChangeDetailQty(p);
+		ret.setData(r);
+		return ret;
+	}
 }
