@@ -161,6 +161,8 @@ public class MgOrgController {
 		Result ret = new Result();
 		PageDTO page = JsonUtil.parse(param, PageDTO.class);
 		MgOrgAuthDTO p = JsonUtil.parse(param, MgOrgAuthDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
 		PageBean<Map<String, String>> r = this.mgOrgService.getOrgAuthBillList(page, p);
 		ret.setData(r);
 		return ret;

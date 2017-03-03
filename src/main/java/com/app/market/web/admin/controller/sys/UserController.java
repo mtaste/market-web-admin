@@ -52,6 +52,24 @@ public class UserController {
 	}
 
 	/**
+	 * 获取用户信息
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/userInfo")
+	@ResponseBody
+	public Object userInfo(String param, HttpServletRequest request) {
+		logger.info("user");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		Map<String, String> r = this.authService.getUserInfo(userId);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
 	 * 获取菜单
 	 * 
 	 * @param param

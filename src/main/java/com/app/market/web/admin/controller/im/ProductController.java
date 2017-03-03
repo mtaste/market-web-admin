@@ -85,6 +85,8 @@ public class ProductController {
 		Result ret = new Result();
 		PageDTO page = JsonUtil.parse(param, PageDTO.class);
 		ImProductChangeDTO p = JsonUtil.parse(param, ImProductChangeDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
 		PageBean<Map<String, String>> r = this.productService.getChangeList(page, p);
 		ret.setData(r);
 		return ret;
