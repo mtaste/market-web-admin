@@ -173,7 +173,7 @@ public class ProductController {
 	}
 
 	/**
-	 * 删除定义
+	 * 删除
 	 * 
 	 * @param param
 	 * @param request
@@ -271,7 +271,7 @@ public class ProductController {
 	}
 
 	/**
-	 * 删除定义
+	 * 修改明细数量
 	 * 
 	 * @param param
 	 * @param request
