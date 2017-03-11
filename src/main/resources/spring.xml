@@ -15,7 +15,7 @@
 	<dubbo:application name="market-web-admin" owner="MarketAPIWeb" />
 
 	<!-- 使用zookeeper广播注册中心暴露服务地址 -->
-	<dubbo:registry address="zookeeper://192.168.1.247:2181"
+	<dubbo:registry address="zookeeper://120.24.73.245:2181"
 		client="zkclient" />
 	<dubbo:monitor protocol="registry" />
 </beans>
