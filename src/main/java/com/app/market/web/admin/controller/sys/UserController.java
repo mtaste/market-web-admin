@@ -166,4 +166,62 @@ public class UserController {
 		ret.setData(r);
 		return ret;
 	}
+
+	/**
+	 * 获取用户信息
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/info")
+	@ResponseBody
+	public Object info(String param, HttpServletRequest request) {
+		logger.info("user");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		Map<String, String> r = this.userService.getInfo(userId);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 修改用户信息
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/change-info")
+	@ResponseBody
+	public Object changeInfo(String param, HttpServletRequest request) {
+		logger.info("change info");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		SysUserDTO p = JsonUtil.parse(param, SysUserDTO.class);
+		p.setId(userId);
+		String r = this.userService.changeInfo(p);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 修改用户密码
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/change-password")
+	@ResponseBody
+	public Object changePassword(String param, HttpServletRequest request) {
+		logger.info("changePassword");
+		Result ret = new Result();
+		String userId = Request.getUserId(request);
+		SysUserDTO p = JsonUtil.parse(param, SysUserDTO.class);
+		p.setId(userId);
+		String r = this.userService.changePassWord(p);
+		ret.setData(r);
+		return ret;
+	}
 }
