@@ -118,6 +118,7 @@ public class OrgDeptController {
 		Result ret = new Result();
 		SysRoleDTO p = JsonUtil.parse(param, SysRoleDTO.class);
 		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
 		String r = this.orgService.saveDeptRoleData(p, userId);
 		ret.setData(r);
 		return ret;

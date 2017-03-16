@@ -18,6 +18,7 @@ import com.app.market.service.common.CrudService;
 import com.app.market.service.user.AuthService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
+import com.app.market.support.util.Request;
 import com.app.market.support.util.Version;
 
 @Controller
@@ -59,6 +60,8 @@ public class AuthController {
 		logger.info("auth.define.save");
 		Result ret = new Result();
 		SysAuthDTO p = JsonUtil.parse(param, SysAuthDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
 		String r = this.authService.saveDefineData(p);
 		ret.setData(r);
 		return ret;
