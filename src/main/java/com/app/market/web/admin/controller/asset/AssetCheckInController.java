@@ -1,4 +1,4 @@
-package com.app.market.web.admin.controller.oa;
+package com.app.market.web.admin.controller.asset;
 
 import java.util.Map;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.app.market.dto.asset.AssetRegisterDTO;
 import com.app.market.dto.common.PageBean;
 import com.app.market.dto.common.PageDTO;
-import com.app.market.dto.oa.OaNoticeDTO;
-import com.app.market.service.oa.OaNoticeService;
+import com.app.market.service.asset.AssetCheckInService;
 import com.app.market.support.dto.Result;
 import com.app.market.support.util.JsonUtil;
 import com.app.market.support.util.Request;
@@ -22,11 +22,11 @@ import com.app.market.support.util.Version;
 import com.app.market.web.admin.controller.agent.AgentInfoController;
 
 @Controller
-@RequestMapping("/oa/notice/")
-public class NoticeController {
+@RequestMapping("/asset/check-in/")
+public class AssetCheckInController {
 	private static final Logger logger = LoggerFactory.getLogger(AgentInfoController.class);
 	@Reference(version = Version.NOW)
-	private OaNoticeService oaNoticeService;
+	private AssetCheckInService assetCheckInService;
 
 	/**
 	 * 获取菜单功能
@@ -41,10 +41,10 @@ public class NoticeController {
 		logger.info("list");
 		Result ret = new Result();
 		PageDTO page = JsonUtil.parse(param, PageDTO.class);
-		OaNoticeDTO p = JsonUtil.parse(param, OaNoticeDTO.class);
+		AssetRegisterDTO p = JsonUtil.parse(param, AssetRegisterDTO.class);
 		String userId = Request.getUserId(request);
 		p.setUpdateUser(userId);
-		PageBean<Map<String, String>> r = this.oaNoticeService.getNoticeList(p, page);
+		PageBean<Map<String, String>> r = this.assetCheckInService.getCheckInList(p, page);
 		ret.setData(r);
 		return ret;
 	}
@@ -59,12 +59,12 @@ public class NoticeController {
 	@RequestMapping("save")
 	@ResponseBody
 	public Object save(String param, HttpServletRequest request) {
-		logger.info("oa.notice.save");
+		logger.info("save");
 		Result ret = new Result();
-		OaNoticeDTO p = JsonUtil.parse(param, OaNoticeDTO.class);
+		AssetRegisterDTO p = JsonUtil.parse(param, AssetRegisterDTO.class);
 		String userId = Request.getUserId(request);
 		p.setUpdateUser(userId);
-		String r = this.oaNoticeService.saveNoticeData(p);
+		String r = this.assetCheckInService.saveCheckInData(p);
 		ret.setData(r);
 		return ret;
 	}
@@ -81,10 +81,10 @@ public class NoticeController {
 	public Object app(String param, HttpServletRequest request) {
 		logger.info("app");
 		Result ret = new Result();
-		OaNoticeDTO p = JsonUtil.parse(param, OaNoticeDTO.class);
+		AssetRegisterDTO p = JsonUtil.parse(param, AssetRegisterDTO.class);
 		String userId = Request.getUserId(request);
 		p.setUpdateUser(userId);
-		String r = this.oaNoticeService.appNoticeData(p);
+		String r = this.assetCheckInService.appCheckInData(p);
 		ret.setData(r);
 		return ret;
 	}
@@ -101,8 +101,8 @@ public class NoticeController {
 	public Object remove(String param, HttpServletRequest request) {
 		logger.info("remove");
 		Result ret = new Result();
-		OaNoticeDTO p = JsonUtil.parse(param, OaNoticeDTO.class);
-		String r = this.oaNoticeService.removeNoticeData(p);
+		AssetRegisterDTO p = JsonUtil.parse(param, AssetRegisterDTO.class);
+		String r = this.assetCheckInService.removeCheckInData(p);
 		ret.setData(r);
 		return ret;
 	}
