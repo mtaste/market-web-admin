@@ -94,7 +94,7 @@ public class AssetManageController {
 	}
 
 	/**
-	 * 借出
+	 * 借出功能
 	 * 
 	 * @param param
 	 * @param request
@@ -113,4 +113,44 @@ public class AssetManageController {
 		return ret;
 	}
 
+	/**
+	 * 归还列表
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("revert-detail")
+	@ResponseBody
+	public Object revertDetail(String param, HttpServletRequest request) {
+		logger.info("detail");
+		Result ret = new Result();
+		PageDTO page = JsonUtil.parse(param, PageDTO.class);
+		AssetRegisterDTO p = JsonUtil.parse(param, AssetRegisterDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		PageBean<Map<String, String>> r = this.assetManageService.getAssetRevertDetailList(p, page);
+		ret.setData(r);
+		return ret;
+	}
+
+	/**
+	 * 归还功能
+	 * 
+	 * @param param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("revert")
+	@ResponseBody
+	public Object revert(String param, HttpServletRequest request) {
+		logger.info("detail");
+		Result ret = new Result();
+		AssetManageDTO p = JsonUtil.parse(param, AssetManageDTO.class);
+		String userId = Request.getUserId(request);
+		p.setUpdateUser(userId);
+		String r = this.assetManageService.assetRevert(p);
+		ret.setData(r);
+		return ret;
+	}
 }
